@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from musicgen.note import Note
 
@@ -36,7 +36,7 @@ class Key:
         return tuple(chrom_scale[root_index:] + chrom_scale[:root_index])
 
 
-print(
-    *[f"{x.name}{x.octave} | {x.frequency}" for x in Key("c3").chromatic_scale],
-    sep="\n",
-)
+# print(
+#     *[f"{x.name}{x.octave} | {x.frequency}" for x in Key("c3").chromatic_scale],
+#     sep="\n",
+# )
