@@ -25,17 +25,18 @@ class Key:
 
     @property
     def chromatic_scale(self) -> tuple:
+        """
+        Create the chromatic scale from the tuning frequency,
+        then return the chromatic scale starting from the root of the key.
+        """
         chrom_scale = tuple(
             Note(f"{x}{self.root_note.octave}") for x in Note.all_notes()
         )
         root_index = list(map(str, chrom_scale)).index(str(self.root_note))
-        return tuple(
-            chrom_scale[(root_index + x) % len(chrom_scale)]
-            for x in range(len(chrom_scale))
-        )
+        return tuple(chrom_scale[root_index:] + chrom_scale[:root_index])
 
 
-# print(
-#     *[f"{x.name}{x.octave} | {x.frequency}" for x in Key("c3").chromatic_scale],
-#     sep="\n",
-# )
+print(
+    *[f"{x.name}{x.octave} | {x.frequency}" for x in Key("c3").chromatic_scale],
+    sep="\n",
+)
