@@ -20,8 +20,11 @@ class Key:
         elif key_name is not None:
             raise NotImplementedError("Sequence is currently a required argument")
 
+        else:
+            self.key = self.chromatic_scale
+
     def __str__(self):
-        return str(self.root_note)
+        return "\n".join(map(str, self.key))
 
     @property
     def chromatic_scale(self) -> tuple:
@@ -29,14 +32,21 @@ class Key:
         Create the chromatic scale from the tuning frequency,
         then return the chromatic scale starting from the root of the key.
         """
-        chrom_scale = tuple(
-            Note(f"{x}{self.root_note.octave}") for x in Note.all_notes()
-        )
-        root_index = list(map(str, chrom_scale)).index(str(self.root_note))
-        return tuple(chrom_scale[root_index:] + chrom_scale[:root_index])
+        lower_notes = Note.all_notes()[Note.all_notes().index(self.root_note.note):]
+        upper_notes = Note.all_notes()[: Note.all_notes().index(self.root_note.note)]
+        upper_degree_offset = len(lower_notes)
 
+        lower_octaves = [
+            Note(f"{x}{self.root_note.octave}", degree=count + 1)
+            for count, x in enumerate(lower_notes)
+        ]
 
-# print(
-#     *[f"{x.name}{x.octave} | {x.frequency}" for x in Key("c3").chromatic_scale],
-#     sep="\n",
-# )
+        upper_octaves = [
+            Note(
+                f"{x}{self.root_note.octave + 1}",
+                degree=upper_degree_offset + count + 1,
+            )
+            for count, x in enumerate(upper_notes)
+        ]
+
+        return tuple(lower_octaves + upper_octaves)
