@@ -37,7 +37,8 @@ class Note:
         """
         Calculates the frequencies of all notes in the chromatic scale relative to the tuning frequency of A4.
         """
-        octave_diff = self.octave - 4
+        octave_diff = self.octave - 4  # Determines where the note's octave is relative to the A4 tuning frequency
+
         dist_from_a = self.all_notes().index(self.note) - self.all_notes().index("A")
         n = len(self.all_notes()) * octave_diff + dist_from_a
         a = 2 ** (1 / 12)
