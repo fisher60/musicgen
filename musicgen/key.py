@@ -26,6 +26,12 @@ class Key:
     def __str__(self):
         return "\n".join(map(str, self.key))
 
+    def __getitem__(self, subscript):
+        return self.key[subscript]
+
+    def __len__(self):
+        return len(self.key)
+
     @property
     def chromatic_scale(self) -> tuple:
         """
